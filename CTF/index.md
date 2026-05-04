@@ -1,7 +1,13 @@
+---
+layout: page
+title: CTF
+permalink: /ctf/
+---
+
 # CTF
 
-CTF, 워게임 문제 풀이 정리 공간
+CTF, 워게임 문제 풀이를 정리하는 공간
 
 ## Dreamhack
 
-- [Welcome-Beginners](./dreamhack-welcome-beginners.md)
+- 작성 예정
