@@ -14,9 +14,9 @@ timezone: Asia/Seoul
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: dahui0708(이다희) # the main title
+title: dahui0708 # the main title
 
-tagline: 학습 기록 # it will display as the subtitle
+tagline: 학습 및 활동 정리 # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   CTF, 자격증, 프로젝트 활동, 강의 학습
