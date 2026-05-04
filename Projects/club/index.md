@@ -1,3 +1,9 @@
+---
+layout: page
+title: 동아리 프로젝트
+permalink: /projects/club/
+---
+
 # 동아리 프로젝트
 
 동아리에서 진행한 프로젝트 기록
