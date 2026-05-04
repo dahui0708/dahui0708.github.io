@@ -16,7 +16,7 @@ timezone: Asia/Seoul
 
 title: dahui0708 # the main title
 
-tagline: 학습 및 활동 기 # it will display as the subtitle
+tagline: 학습 및 활동 기록 # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   CTF, 자격증, 프로젝트 활동, 강의 학습
@@ -29,7 +29,7 @@ github:
   username: dahui0708 # change to your GitHub username
 
 twitter:
-  username: twitter_username # change to your Twitter username
+  username:  # change to your Twitter username
 
 social:
   # Change to your full name.
@@ -39,8 +39,8 @@ social:
   fediverse_handle: # fill in your fediverse handle. E.g. "@username@domain.com"
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your Twitter homepage
-    - https://github.com/username # change to your GitHub homepage
+    - https://github.com/dahui0708 # change to your Twitter homepage
+    # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
