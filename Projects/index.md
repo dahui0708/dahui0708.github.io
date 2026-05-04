@@ -1,8 +1,14 @@
+---
+layout: page
+title: 프로젝트 활동
+permalink: /projects/
+---
+
 # 프로젝트 활동
 
 동아리 프로젝트와 개인 프로젝트 활동 기록 및 정리
 
 ## 분류
 
-- [동아리 프로젝트](./club/)
-- [개인 프로젝트](./personal/)
+- [동아리 프로젝트](/projects/club/)
+- [개인 프로젝트](/projects/personal/)
