@@ -16,7 +16,7 @@ timezone: Asia/Seoul
 
 title: dahui0708 # the main title
 
-tagline: 학습 및 활동 정리 # it will display as the subtitle
+tagline: 학습 및 활동 기 # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   CTF, 자격증, 프로젝트 활동, 강의 학습
