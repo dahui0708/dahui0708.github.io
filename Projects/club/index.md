@@ -4,8 +4,6 @@ title: 동아리 프로젝트
 permalink: /projects/club/
 ---
 
-# 동아리 프로젝트
-
 <div class="post-list">
   <div class="card post-preview flex-md-row-reverse">
     <div class="card-body d-flex flex-column">
