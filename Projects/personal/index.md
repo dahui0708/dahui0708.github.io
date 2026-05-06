@@ -4,8 +4,6 @@ title: 개인 프로젝트
 permalink: /projects/personal/
 ---
 
-# 개인 프로젝트
-
 <div class="post-list">
   <div class="card post-preview flex-md-row-reverse">
     <div class="card-body d-flex flex-column">
