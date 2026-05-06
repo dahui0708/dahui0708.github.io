@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: Dream Beginners
@@ -714,7 +713,7 @@ ssh
 SSH 기본 형식
 
 ```bash
-ssh user@HOST -p PORT
+ssh user@HOST -p PORT -i [개인 키 파일 경로]
 ```
 
 구분해야 할 것
@@ -760,42 +759,6 @@ ssh user@HOST -p PORT -i 개인키파일경로
 
 이번 강의에서는 SSH 접속 방법 자체를 익히는 것이 목적이라  
 인증 구조를 깊게 다루지는 않음
-
-
-## SSH 접속 예시
-
-문제 페이지에서 접속 정보를 확인함
-
-확인해야 할 정보
-
-- Host
-- Port
-- ID
-- Password 또는 개인 키 파일
-
-패스워드로 접속하는 경우
-
-```bash
-ssh bguser@host3.dreamhack.games -p 11051
-```
-
-명령어 실행 후 패스워드를 입력하면 서버에 접속할 수 있음
-
-개인 키로 접속하는 경우
-
-```bash
-ssh bguser@host3.dreamhack.games -p 11051 -i 개인키파일경로
-```
-
-같은 서버라도 문제에서 제공하는 인증 방식에 따라  
-패스워드를 입력할 수도 있고 개인 키 파일을 사용할 수도 있음
-
-중요한 점
-
-- `user@HOST` 형식으로 작성
-- 포트 번호가 있으면 `-p` 옵션 사용
-- 개인 키 파일이 있으면 `-i` 옵션 사용
-- Host와 Port는 문제 페이지에서 확인
 
 
 ## 실습: SSH
@@ -846,17 +809,1207 @@ cat flag
 
 `cat` 명령어는 파일 내용을 터미널에 출력할 때 사용함
 
-이번 실습 흐름은 단순함
+실습 흐름
 
 - SSH로 서버 접속
 - `ls`로 파일 확인
 - `cat flag`로 flag 읽기
 - 출력된 `DH{...}` 형식의 flag 제출
 
-이번 실습에서 정리할 핵심
+실습에서 정리할 핵심
 
 - SSH는 원격 서버에 로그인해서 명령어를 실행하는 방식
 - `user@HOST` 형식으로 접속함
 - 포트 번호는 `-p` 옵션으로 지정함
 - 개인 키 파일은 `-i` 옵션으로 지정함
 - 서버에 접속한 뒤에는 일반 Linux 명령어를 사용할 수 있음
+
+
+## Visual Studio Code
+
+Visual Studio Code는 코드를 작성할 때 사용하는 소스 코드 편집기
+
+Windows, macOS, Linux에서 사용할 수 있고  
+C, Python, JavaScript 등 여러 언어를 작성할 수 있음
+
+기억할 것!
+
+- 줄여서 VS Code라고 부름
+- 다양한 언어 지원
+- Extension을 설치해서 기능 확장 가능
+- 터미널을 내부에서 열 수 있음
+- 리눅스 VM과 연결해서 원격 개발 환경으로 사용 가능
+
+해킹 공부를 할 때도 익스플로잇 코드나 스크립트를 작성할 일이 생기므로  
+VS Code 같은 편집기를 익숙하게 사용하는 것이 좋음
+
+
+## VS Code에서 자주 쓰는 기능
+
+VS Code에서 자주 볼 기능
+
+- Command Palette   [Ctrl+Shift+P]
+  : vs code 기능을 검색하여 실행할 수 있는 창
+- Terminal   [Ctrl+']
+  : vs code 안에서 명령어를 실행할 수 있는 창
+- Extensions   
+- Explorer
+
+
+VS Code를 사용할 때는 파일 편집만 하는 것이 아니라  
+터미널에서 명령어를 실행하고 결과를 바로 확인하는 흐름이 중요함
+
+
+## 리눅스 VM과 VS Code 연결
+
+리눅스 VM을 따로 사용해도 되지만,  
+VS Code와 연결하면 호스트 PC에서 편하게 파일을 수정할 수 있음
+
+구분해야 할 것
+
+- 호스트 머신: 실제 내가 사용하는 컴퓨터
+- 게스트 머신: VM 안에서 실행되는 리눅스 환경
+
+리눅스 VM과 VS Code를 연결하면  
+VS Code에서 리눅스 환경의 파일을 직접 열고 수정할 수 있음
+
+
+## WSL 환경에서 VS Code 연결
+
+WSL을 사용하는 경우 VS Code와 쉽게 연결 가능
+
+먼저 VS Code에서 WSL 확장을 설치함
+
+확인할 것
+
+- VS Code Extensions 탭 열기
+- WSL 검색
+- WSL Extension 설치
+
+설치 후 리눅스 환경에서 원하는 디렉토리로 이동한 뒤 아래 명령어 실행
+
+```bash
+code .
+```
+
+이 명령어를 실행하면 현재 리눅스 디렉토리가 VS Code에서 열림
+
+여기서 중요한 점
+
+- `code .`은 현재 디렉토리를 VS Code로 여는 명령어
+- WSL 환경에서는 비교적 간단하게 연결 가능
+- 열린 VS Code 안에서 리눅스 파일을 직접 수정 가능
+
+
+## VirtualBox 환경에서 VS Code 연결
+
+VirtualBox로 리눅스 VM을 사용하는 경우  
+VS Code와 연결하려면 SSH 설정이 필요함
+
+흐름
+
+1. 리눅스 VM에 SSH 서버 설치
+2. VirtualBox 포트 포워딩 설정
+3. VS Code에 Remote - SSH 확장 설치
+4. SSH config 파일 작성
+5. VS Code에서 원격 서버 접속
+
+WSL보다 설정할 것이 많지만,  
+한 번 연결해두면 VS Code에서 리눅스 VM 파일을 편하게 수정할 수 있음
+
+
+## 리눅스 VM에 SSH 서버 설치
+
+VirtualBox의 리눅스 VM에 원격 접속하려면 SSH 서버가 필요함
+
+리눅스 VM 터미널에서 아래 명령어 실행
+
+```bash
+sudo apt update
+sudo apt upgrade
+sudo apt-get install openssh-server
+```
+
+설치 중 계속 진행할지 물어보면 `y`를 입력함
+
+SSH 서버를 설치해야  
+호스트 PC의 VS Code에서 리눅스 VM으로 원격 접속 가능
+
+
+## VirtualBox 포트 포워딩
+
+호스트 PC와 게스트 VM은 네트워크가 분리되어 있음
+
+그래서 호스트에서 VM의 SSH 서버로 접속하려면 포트 포워딩 설정이 필요함
+
+설정 흐름
+
+1. VirtualBox에서 해당 VM 설정 열기
+2. 네트워크 메뉴 선택
+3. Advanced 클릭
+4. 포트 포워딩 클릭
+5. 규칙 추가 버튼 클릭
+6. SSH 접속용 규칙 작성
+
+포트 포워딩 설정 예시
+
+```text
+이름: ssh
+프로토콜: TCP
+호스트 포트: 22
+게스트 포트: 22
+```
+
+구분해야 할 것
+
+- 호스트 포트: 내 컴퓨터에서 접속할 때 사용할 포트
+- 게스트 포트: 리눅스 VM 안의 SSH 서버가 사용하는 포트
+
+
+## VS Code Remote - SSH 설정
+
+VS Code에서 리눅스 VM에 접속하려면 Remote - SSH 확장을 설치해야 함
+
+설치 흐름
+
+1. VS Code Extensions 탭 열기
+2. Remote - SSH 검색
+3. Remote - SSH 설치
+
+설치 후 Command Palette를 열고 SSH 설정 파일을 수정함
+
+```text
+Ctrl + Shift + P
+```
+
+검색할 항목
+
+```text
+Remote-SSH: Open SSH Configuration File
+```
+
+기본 config 파일 경로는 보통 아래 위치
+
+```text
+~/.ssh/config
+```
+
+Windows에서는 사용자 폴더 아래의 `.ssh/config` 파일을 선택하면 됨
+
+
+## SSH config 파일 작성
+
+SSH config 파일은 접속 정보를 미리 저장해두는 파일
+
+기본 형식
+
+```text
+Host 접속할_호스트_이름
+    HostName IP주소
+    Port 포트번호
+    User 사용자이름
+    IdentityFile 개인키파일경로
+```
+
+예시
+
+```text
+Host linuxvm
+    HostName 127.0.0.1
+    Port 22
+    User user
+    IdentityFile ~/.ssh/keyk
+```
+
+각 항목 의미
+
+- `Host`: VS Code에서 보여줄 접속 이름
+- `HostName`: 접속할 IP 주소
+- `Port`: 접속 포트
+- `User`: 리눅스 사용자 이름
+- `IdentityFile`: 개인 키 파일 경로
+
+개인 키를 사용하지 않는 경우에는  
+패스워드 입력 방식으로 접속할 수 있음
+
+
+## VS Code에서 리눅스 VM 접속
+
+SSH config 파일을 작성한 뒤 VS Code에서 원격 접속 가능
+
+접속 흐름
+
+1. Command Palette 열기
+2. `Remote-SSH: Connect to Host...` 선택
+3. 작성한 Host 이름 선택
+4. 새 창이 열리면 사용자 비밀번호 입력
+5. 리눅스 VM 접속 완료
+
+접속 후에는 VS Code 왼쪽 Explorer에서 리눅스 파일을 확인할 수 있음
+
+Open Folder를 눌러 원하는 디렉토리를 선택하면  
+해당 리눅스 디렉토리 안의 파일을 VS Code로 수정 가능
+
+
+## VS Code로 파일 수정
+
+VS Code로 리눅스 VM에 연결하면  
+리눅스 환경의 파일을 직접 만들고 수정할 수 있음
+
+예시 흐름
+
+1. 리눅스 VM에 원격 접속
+2. Desktop 디렉토리 선택
+3. `a.txt` 파일 생성
+4. 내용 작성
+5. 저장
+6. 리눅스 VM 화면에서도 파일 생성 확인
+
+VS Code에서 수정한 내용이 실제 리눅스 VM에도 반영됨
+
+이 부분이 중요한 이유
+
+- 터미널만 사용할 때보다 파일 수정이 편함
+- 리눅스 환경 파일을 직접 편집 가능
+- 실습 코드 작성할 때 편리함
+
+
+## C 코드 작성
+
+VS Code에서 간단한 C 코드를 작성해봄
+
+예시 코드
+
+```c
+#include <stdio.h>
+
+int main(){
+    printf("Hello Beginners!\n");
+    return 0;
+}
+```
+
+이 코드는 `Hello Beginners!`를 출력하고 종료하는 기본 C 프로그램
+
+C 파일은 보통 `.c` 확장자를 사용함
+
+예시 파일명
+
+```text
+test.c
+```
+
+
+## C 코드 컴파일과 실행
+
+C 코드는 작성한 뒤 바로 실행되는 것이 아니라  
+컴파일 과정을 거쳐 실행 가능한 파일로 바꿔야 함
+
+리눅스에서 C 코드를 컴파일할 때는 보통 `gcc`를 사용함
+
+gcc 버전 확인
+
+```bash
+gcc --version
+```
+
+gcc가 설치되어 있지 않으면 설치
+
+```bash
+sudo apt install gcc
+```
+
+컴파일 명령어
+
+```bash
+gcc -o test test.c
+```
+
+의미
+
+- `gcc`: C 코드 컴파일러
+- `-o test`: 실행 파일 이름을 `test`로 지정
+- `test.c`: 컴파일할 C 소스 파일
+
+실행
+
+```bash
+./test
+```
+
+실행 결과
+
+```text
+Hello Beginners!
+```
+
+정리할 것
+
+- `.c` 파일은 소스 코드 파일
+- `gcc`로 컴파일해야 실행 가능
+- `./파일명`으로 실행 파일 실행 가능
+
+
+## VS Code로 C 코드 실행
+
+VS Code에서 C/C++ 확장을 설치하면  
+터미널에서 직접 gcc 명령어를 치지 않아도 메뉴로 실행 가능
+
+설치 흐름
+
+1. Extensions 탭 열기
+2. C/C++ 검색
+3. Microsoft C/C++ Extension 설치
+
+실행 방법
+
+1. C 코드 파일 열기
+2. 상단 메뉴에서 Run 선택
+3. Run Without Debugging 선택  [Ctrl+f5]
+
+VS Code가 자동으로 컴파일하고 실행 결과를 터미널에 보여줌
+
+그래도 gcc 컴파일 방법은 기본적으로 알아두는 것이 좋음  
+VS Code를 사용할 수 없는 환경에서도 직접 컴파일해야 하는 경우가 있기 때문
+
+
+## 에러 해결
+
+코드를 작성하다 보면 문법 오류나 변수 선언 오류가 발생할 수 있음
+
+에러가 발생하면 터미널에 에러 메시지가 출력됨  
+이 메시지를 보고 어느 줄에서 문제가 발생했는지 확인해야 함
+
+에러 해결 흐름
+
+1. 터미널 에러 메시지 확인
+2. 어느 파일, 몇 번째 줄인지 확인
+3. 어떤 변수가 문제인지 확인
+4. 코드 수정
+5. 다시 컴파일
+
+에러 메시지 안에 문제 위치와 원인이 같이 들어 있음
+
+구글 검색을 통해 비슷한 에러 해결 방법을 찾아보는 것도 좋은 방법임.
+
+
+## 디버깅
+
+디버깅은 코드의 오류를 찾고 수정하는 과정
+
+단순히 코드가 실행되는지만 보는 것이 아니라  
+변수 값이 어떻게 변하는지, 어느 줄에서 문제가 생기는지 확인할 수 있음
+
+VS Code에서 디버깅할 때 볼 수 있는 부분
+
+'Breakpoint'는 프로그램을 멈출 지점을 설정하는 것
+
+코드 왼쪽 줄 번호 옆을 클릭하면 중단점을 설정할 수 있음  
+프로그램이 해당 줄에 도착하면 실행이 멈추고 변수 값을 확인할 수 있음
+
+'Debug View'에서 확인 가능한 것
+
+- 변수 값
+- Watch 표현식
+- Call Stack
+- Breakpoints 목록
+
+'Debug Toolbar'에서 자주 쓰는 기능
+
+- Continue/Pause: 다음 중단점까지 실행
+- Step Over: 함수 내부로 들어가지 않고 다음 줄 실행
+- Step Into: 함수 내부로 들어가서 실행
+- Step Out: 현재 함수 밖으로 나가기
+- Restart: 디버깅 다시 시작
+- Stop: 디버깅 종료
+
+디버깅은 코드가 왜 원하는 대로 동작하지 않는지 확인할 때 필요함
+
+
+## Vim
+
+Vim은 리눅스 환경에서 사용할 수 있는 텍스트 편집기
+
+마우스 없이 키보드만으로 파일을 수정할 수 있음
+
+보안 실습이나 서버 환경에서는 VS Code를 사용할 수 없는 경우도 있으므로  
+기본적인 Vim 사용법을 알아두면 좋음
+
+설치
+
+```bash
+sudo apt install vim
+```
+
+실행
+
+```bash
+vi
+```
+
+파일 열기
+
+```bash
+vi a.txt
+```
+
+기억할 것
+
+- Vim은 키보드 중심 편집기
+- 처음에는 사용법이 어렵게 느껴질 수 있음
+- 리눅스 서버 환경에서 자주 사용됨
+- 최소한 파일 열기, 수정, 저장, 종료는 알아야 함
+
+
+## Vim 모드
+
+Vim에는 여러 모드가 있음 (가장 기본적인 모드)
+
+- Normal Mode
+- Insert Mode
+- Command Mode
+
+Normal Mode는 Vim을 처음 실행했을 때의 기본 모드  
+커서 이동, 복사, 삭제 같은 명령을 수행함
+
+Insert Mode는 실제로 텍스트를 입력하는 모드  
+일반 편집기처럼 글자를 입력할 수 있음
+
+Command Mode는 저장, 종료, 검색 같은 명령을 실행하는 모드
+
+모드 전환에서 중요한 키
+
+- `esc`: Normal Mode로 돌아가기
+- `i`: Insert Mode로 전환
+- `:`: Command Mode로 전환
+
+
+## Vim Normal Mode
+
+Normal Mode에서는 커서 이동이나 삭제, 복사 같은 작업을 함
+
+커서 이동
+
+- `h`: 왼쪽으로 이동
+- `j`: 아래로 이동
+- `k`: 위로 이동
+- `l`: 오른쪽으로 이동
+- `0`: 행의 처음으로 이동
+- `$`: 행의 끝으로 이동
+- `gg`: 첫 행으로 이동
+- `G`: 마지막 행으로 이동
+
+삭제, 복사, 붙여넣기
+
+- `x`: 현재 커서 위치의 글자 삭제
+- `X`: 현재 커서 앞 글자 삭제
+- `dd`: 현재 행 삭제
+- `yy`: 현재 행 복사
+- `p`: 복사한 내용을 현재 행 이후에 붙여넣기
+- `P`: 복사한 내용을 현재 행 이전에 붙여넣기
+
+문자열 찾기
+
+- `/문자열` 입력 후 Enter: 현재 커서 이후에서 문자열 찾기
+- `n`: 다음 검색 결과로 이동
+
+되돌리기
+
+- `u`: 이전 수정 사항 되돌리기
+
+
+## Vim Insert Mode
+
+Insert Mode는 실제로 글자를 입력하는 모드
+
+Normal Mode에서 아래 키를 누르면 Insert Mode로 전환 가능
+
+- `i`: 현재 커서 위치에 입력
+- `I`: 현재 행의 처음에 입력
+- `a`: 현재 커서 다음 위치에 입력
+- `A`: 현재 행의 끝에 입력
+- `o`: 현재 커서 아래 새 줄을 만들고 입력
+- `O`: 현재 커서 위 새 줄을 만들고 입력
+- `s`: 현재 커서 글자 지우고 입력
+- `S`: 현재 행을 지우고 입력
+
+입력을 끝내고 다시 명령을 사용하려면 `esc`를 눌러 Normal Mode로 돌아감
+
+
+## Vim Command Mode
+
+Command Mode는 저장, 종료, 치환 같은 명령을 실행하는 모드
+
+Normal Mode에서 `:`를 입력하면 Command Mode로 전환됨
+
+자주 쓰는 명령어
+
+```text
+:w
+```
+
+저장
+
+```text
+:q
+```
+
+종료
+
+```text
+:i
+```
+
+취소
+
+```text
+:wq
+```
+
+저장하고 종료
+
+```text
+:q!
+```
+
+저장하지 않고 종료
+
+문자열 전체 치환
+
+```text
+:%s/문자열1/문자열2/g
+```
+
+Vim에서 가장 먼저 익혀야 할 것은 저장과 종료  
+처음에는 `esc` → `:wq` 흐름을 기억하면 됨
+
+
+## Docker(도커)
+
+Docker(도커)는 컨테이너를 만들고 실행할 수 있게 해주는 가상화 플랫폼
+
+CTF나 워게임을 풀다 보면 문제 파일 안에 `Dockerfile`이 제공되는 경우가 있음  
+이때 Docker를 사용하면 출제자가 의도한 문제 환경을 거의 그대로 재현할 수 있음
+
+
+- Docker는 컨테이너 기반 가상화 도구
+- 컨테이너는 독립된 실행 환경
+- VM보다 가볍게 실행 가능
+- 문제 환경을 동일하게 재현할 때 사용
+- 워게임, CTF, 서버 실습에서 자주 사용됨
+
+Docker를 알면 문제 파일에 포함된 환경을 직접 실행해볼 수 있고,  
+문제가 어떤 환경에서 동작하는지도 확인 가능
+
+
+## Docker 기본 개념
+
+Docker에서 자주 나오는 개념은 크게 세 가지
+
+- Docker Image는 컨테이너를 만들기 위한 기본 틀
+
+이미지 안에는 실행에 필요한 파일, 환경 변수, 명령어, 파일 시스템 등이 들어 있음  
+쉽게 말하면 컨테이너를 만들기 위한 준비된 환경이라고 볼 수 있음
+
+- Docker Container는 이미지로부터 만들어진 실제 실행 환경
+
+이미지가 실행 전 상태라면, 컨테이너는 실행 중인 상태에 가까움  
+컨테이너 안에서는 분리된 파일 시스템과 실행 환경을 사용할 수 있음
+
+- Docker Registry는 이미지를 저장하는 저장소
+
+대표적으로 Docker Hub가 있음  
+Docker Hub에서 이미지를 다운로드하거나, 직접 만든 이미지를 업로드할 수 있음
+
+
+## Docker를 쓰는 이유
+
+CTF나 워게임에서는 문제 환경이 중요함
+
+같은 프로그램이라도 실행 환경이 다르면 결과가 달라질 수 있음  
+특히 시스템 해킹 문제는 라이브러리 버전, 운영체제 환경, 실행 권한 등이 풀이에 영향을 줄 수 있음
+
+Docker를 사용하면 좋은 점
+
+- 문제 환경을 쉽게 재현 가능
+- VM보다 가볍게 실행 가능
+- 문제마다 독립된 환경 제공 가능
+- 다른 문제 환경에 영향을 덜 줌
+- 출제자가 의도한 환경과 비슷하게 맞출 수 있음
+
+즉, Docker는 문제를 풀기 위한 환경을 빠르고 일정하게 만드는 데 사용됨
+
+
+## Docker 명령어 - 이미지 생성
+
+`docker build`는 Dockerfile을 이용해서 이미지를 생성하는 명령어
+
+기본 형식
+
+```bash
+docker build [옵션] <경로>
+```
+
+현재 디렉토리에 있는 Dockerfile로 이미지를 만들 때
+
+```bash
+docker build .
+```
+
+이미지 이름과 태그를 지정할 때
+
+```bash
+docker build -t my-image .
+```
+
+여기서 `-t` 옵션은 이미지 이름과 태그를 지정할 때 사용함
+
+태그를 따로 지정하지 않으면 보통 `latest`로 지정됨
+
+빌드가 끝난 뒤 생성된 이미지를 확인할 때
+
+```bash
+docker images
+```
+
+- `docker build .`: 현재 디렉토리의 Dockerfile로 이미지 생성
+- `docker build -t 이름 .`: 이미지 이름 지정해서 빌드
+- `docker images`: 생성된 이미지 목록 확인
+
+
+## Docker 명령어 - 컨테이너 실행
+
+`docker run`은 이미지로 컨테이너를 생성하고 실행하는 명령어
+
+기본 형식
+
+```bash
+docker run [옵션] <이미지명 또는 ID> [명령어]
+```
+
+포트를 연결해서 실행할 때
+
+```bash
+docker run -p <호스트PORT>:<컨테이너PORT> <이미지명 또는 ID>
+```
+
+여기서 `-p` 옵션은 호스트 포트와 컨테이너 포트를 연결할 때 사용함
+
+컨테이너 안에서 bash 셸을 열 때
+
+```bash
+docker run -it <이미지명 또는 ID> /bin/bash
+```
+
+-`-it`: 옵션의 의미
+- `-i`: 표준 입력을 활성화
+- `-t`: 터미널 환경 사용
+
+즉, `-it`는 컨테이너 안에서 명령어를 직접 입력할 수 있게 해주는 옵션
+
+자주 쓰는 형태
+
+```bash
+docker run -it my-image:1 /bin/bash
+```
+
+
+## Docker 명령어 - 컨테이너 목록 확인
+
+실행 중인 컨테이너 목록 확인
+
+```bash
+docker ps
+```
+
+종료된 컨테이너까지 모두 확인
+
+```bash
+docker ps -a
+```
+
+구분해야 할 것
+
+- `docker ps`: 실행 중인 컨테이너만 출력
+- `docker ps -a`: 종료된 컨테이너까지 모두 출력
+
+컨테이너 안에서 `exit`를 입력하면 컨테이너가 종료됨
+
+종료 후 `docker ps`를 실행하면 목록에 보이지 않을 수 있음  
+하지만 `docker ps -a`를 실행하면 종료된 컨테이너까지 확인 가능
+
+
+## Docker 명령어 - 컨테이너 생성과 시작
+
+`docker run`은 컨테이너 생성과 실행을 한 번에 수행함
+
+반대로 생성과 실행을 따로 할 수도 있음
+
+컨테이너 생성
+
+```bash
+docker create [옵션] <이미지명 또는 ID> [명령어]
+```
+
+중단된 컨테이너 시작
+
+```bash
+docker start [옵션] <컨테이너명 또는 ID>
+```
+
+흐름
+
+1. `docker create`로 컨테이너 생성
+2. `docker ps -a`로 생성된 컨테이너 확인
+3. `docker start`로 컨테이너 실행
+4. `docker ps`로 실행 상태 확인
+
+`docker run`은 간단한 실습에서 편하고,  
+`docker create`와 `docker start`는 컨테이너 생성과 실행을 구분하고 싶을 때 사용함
+
+
+## Docker 명령어 - 실행 중인 컨테이너 접속
+
+`docker exec`는 실행 중인 컨테이너에 접속해서 명령어를 수행하는 명령어
+
+기본 형식
+
+```bash
+docker exec [옵션] <컨테이너명 또는 ID> [명령어]
+```
+
+실행 중인 컨테이너에서 bash 셸 열기
+
+```bash
+docker exec -it <컨테이너명 또는 ID> /bin/bash
+```
+
+`docker run -it`와 비슷하게 보이지만 차이가 있음
+
+- `docker run`: 새 컨테이너를 생성하고 실행
+- `docker exec`: 이미 실행 중인 컨테이너 안으로 들어감
+
+실행 중인 컨테이너를 중단할 때
+
+```bash
+docker stop <컨테이너명 또는 ID>
+```
+
+
+## Docker 명령어 - 이미지 다운로드와 삭제
+
+Docker Hub에 있는 이미지를 다운로드할 때
+
+```bash
+docker pull <이미지명>
+```
+
+예시
+
+```bash
+docker pull ubuntu:18.04
+```
+
+컨테이너 삭제
+
+```bash
+docker rm <컨테이너명 또는 ID>
+```
+
+이미지 삭제
+
+```bash
+docker rmi <이미지명 또는 ID>
+```
+
+이미지 또는 컨테이너의 자세한 정보 확인
+
+```bash
+docker inspect <이미지명 또는 컨테이너명 또는 ID>
+```
+
+정리할 것
+
+- `docker pull`: 이미지 다운로드
+- `docker rm`: 컨테이너 삭제
+- `docker rmi`: 이미지 삭제
+- `docker inspect`: 자세한 정보 확인
+
+
+## Docker 설치 확인
+
+Ubuntu 환경에서는 Docker 엔진을 설치한 뒤 사용할 수 있음
+
+설치가 끝난 뒤 정상 동작 확인
+
+```bash
+sudo docker run hello-world
+```
+
+정상적으로 설치되어 있으면 아래 문구가 출력됨
+
+```text
+Hello from Docker!
+```
+
+이 문구가 출력되면 Docker가 정상적으로 설치된 상태
+
+
+## Exercise: Docker
+
+Dreamhack의 Docker 실습은 Dockerfile로 직접 이미지를 빌드하고,  
+컨테이너를 실행해보는 것이 목표
+
+실습 흐름
+
+1. 문제 파일 다운로드
+2. 압축 해제
+3. Dockerfile이 있는 디렉토리로 이동
+4. 이미지 빌드
+5. 이미지 목록 확인
+6. 컨테이너 실행
+7. 컨테이너 안에서 파일 확인
+8. flag 확인
+
+문제 파일 안에는 보통 `Dockerfile`과 `deploy` 폴더가 있음
+
+이미지 빌드
+
+```bash
+docker build .
+```
+
+빌드가 완료되면 이미지 목록 확인
+
+```bash
+docker images
+```
+
+생성된 이미지 ID를 확인한 뒤 컨테이너 실행
+
+```bash
+docker run -it <이미지ID> /bin/bash
+```
+
+컨테이너 안에 들어가면 리눅스 명령어를 사용할 수 있음
+
+
+## Docker 컨테이너 안에서 문제 확인
+
+컨테이너에 접속한 뒤 파일 목록 확인
+
+```bash
+ls
+```
+
+문제 파일이 있으면 실행 가능
+
+```bash
+./chall
+```
+
+flag 파일이 있으면 내용 확인
+
+```bash
+cat flag
+```
+
+이번 실습에서는 컨테이너 안에 `chall`과 `flag` 파일이 존재함
+
+흐름
+
+1. `ls`로 파일 확인
+2. `./chall` 실행
+3. 출력 결과 확인
+4. `cat flag`로 flag 확인
+
+컨테이너에서 빠져나올 때
+
+```bash
+exit
+```
+
+종료된 컨테이너 확인
+
+```bash
+docker ps -a
+```
+
+종료된 컨테이너를 다시 실행
+
+```bash
+docker start <컨테이너명 또는 ID>
+```
+
+실행 중인 컨테이너에 다시 접속
+
+```bash
+docker exec -it <컨테이너명 또는 ID> /bin/bash
+```
+
+정리할 것
+
+- 컨테이너 안에서도 일반 리눅스 명령어 사용 가능
+- `exit`를 입력하면 컨테이너에서 빠져나옴
+- 종료된 컨테이너는 `docker ps -a`로 확인 가능
+- `docker start`와 `docker exec`로 다시 접속 가능
+
+
+## Dockerfile
+
+Dockerfile은 Docker 이미지를 만들기 위한 설정 파일
+
+이미지를 생성하는 데 필요한 명령어가 순서대로 작성되어 있음  
+운영체제, 환경 변수, 파일 복사, 권한 설정, 실행 명령어 등을 정의할 수 있음
+
+Dockerfile의 기본 파일명은 확장자 없이 `Dockerfile`
+
+`docker build`를 실행하면 현재 디렉토리에서 Dockerfile을 찾아 이미지를 빌드함
+
+Dockerfile 기본 구조
+
+```dockerfile
+# 주석
+명령어 인자
+
+FROM ubuntu:18.04
+```
+
+Dockerfile은 보통 `FROM` 명령어로 시작함
+
+
+## Dockerfile 명령어 - 1
+
+`FROM`은 이미지의 기반이 되는 base 이미지를 지정함
+
+```dockerfile
+FROM ubuntu:18.04
+```
+
+Ubuntu 18.04 이미지를 기반으로 새 이미지를 만든다는 의미
+
+`ENV`는 Dockerfile 안에서 사용할 환경 변수를 지정함
+
+```dockerfile
+ENV user chall
+ENV chall_port 2222
+```
+
+파일 안에서 변수는 아래처럼 사용할 수 있음
+
+```dockerfile
+$변수명
+${변수명}
+```
+
+예를 들어 `ENV user chall`로 지정하면  
+이후 Dockerfile 안에서 `$user`를 사용할 수 있음
+
+
+## Dockerfile 명령어 - 2
+
+`RUN`은 이미지를 빌드할 때 실행할 명령어를 작성함
+
+```dockerfile
+RUN apt-get update
+RUN ["/bin/bash", "-c", "echo hello"]
+```
+
+패키지를 설치하거나 권한을 설정할 때 자주 사용함
+
+`COPY`는 로컬 파일이나 디렉토리를 이미지 파일 시스템 안으로 복사함
+
+```dockerfile
+COPY <src> <dest>
+```
+
+`ADD`도 파일이나 디렉토리를 이미지 파일 시스템 안으로 복사함
+
+```dockerfile
+ADD <src> <dest>
+```
+
+`WORKDIR`은 Dockerfile 안에서 명령어가 실행될 작업 디렉토리를 지정함
+
+```dockerfile
+WORKDIR /home/user
+```
+
+리눅스의 `cd` 명령어와 비슷하게 이해하면 됨
+
+`USER`는 이후 명령을 실행할 사용자 또는 그룹을 지정함
+
+```dockerfile
+USER $username
+```
+
+`EXPOSE`는 컨테이너가 사용할 포트를 지정함
+
+```dockerfile
+EXPOSE 80/tcp
+```
+
+컨테이너가 외부에서 들어오는 네트워크 요청을 받을 포트를 표시하는 역할
+
+
+## Dockerfile 명령어 - 3
+
+`ENTRYPOINT`는 컨테이너가 실행될 때 수행할 기본 명령어를 지정함
+
+```dockerfile
+ENTRYPOINT ["echo", "hello"]
+```
+
+`CMD`는 컨테이너가 실행될 때 수행할 명령어를 지정하거나,  
+`ENTRYPOINT`에 전달할 인자를 지정함
+
+```dockerfile
+CMD ["echo", "hello"]
+```
+
+`ENTRYPOINT`와 `CMD`를 함께 사용할 수도 있음
+
+예시
+
+```dockerfile
+ENTRYPOINT ["python"]
+CMD ["app.py"]
+```
+
+이 상태에서 컨테이너를 실행하면 기본적으로 아래 명령어가 실행됨
+
+```bash
+python app.py
+```
+
+만약 실행할 때 인자를 바꾸면 `CMD` 부분이 바뀔 수 있음
+
+예시 흐름
+
+```bash
+docker run 이미지
+```
+
+→ `python app.py` 실행
+
+```bash
+docker run 이미지 test.py
+```
+
+→ `python test.py` 실행
+
+정리할 것
+
+- `ENTRYPOINT`: 컨테이너 실행 시 기본 실행 명령 지정
+- `CMD`: 기본 인자 또는 기본 명령 지정
+- `CMD`는 여러 개 있으면 마지막 `CMD`가 적용됨
+- `docker run`에서 인자를 주면 `CMD`가 바뀔 수 있음
+
+
+## Exercise Dockerfile 흐름
+
+실습 Dockerfile에서는 문제 실행 환경을 구성함
+
+확인할 수 있는 내용
+
+- Ubuntu 22.04 기반 이미지 사용
+- 환경 변수 설정
+- 필요한 패키지 설치
+- 사용자 생성
+- flag 파일 복사
+- 실행 파일 복사
+- 파일 소유자와 권한 설정
+- 작업 디렉토리 설정
+- 사용할 사용자 지정
+- 포트 노출
+- socat으로 문제 서비스 실행
+
+Dockerfile 흐름을 보면 문제 환경이 어떻게 만들어지는지 알 수 있음
+
+특히 CTF 문제에서는 flag 권한, 실행 파일 권한, 사용자 권한이 중요할 수 있음  
+따라서 Dockerfile이 제공되면 어떤 파일을 어디에 복사하고 어떤 권한을 주는지 확인하는 것이 좋음
+
+
+## Docker Hub
+
+Docker Hub는 Docker의 공식 레지스트리
+
+Docker 이미지를 저장하고 공유할 수 있는 저장소
+
+Docker Hub에서 할 수 있는 것
+
+- 공식 이미지 다운로드
+- 다른 사용자가 올린 이미지 다운로드
+- 직접 만든 이미지 업로드
+- 이미지 버전 관리
+- 팀원과 이미지 공유
+
+대표적으로 Ubuntu, CentOS 같은 운영체제 이미지나  
+프로그래밍 언어 개발 환경 이미지 등을 가져올 수 있음
+
+
+## Docker Hub 이미지 업로드
+
+Docker Hub에 이미지를 업로드하려면 먼저 로그인해야 함
+
+```bash
+docker login
+```
+
+이미지를 빌드할 때 저장소 이름과 태그를 지정함
+
+```bash
+docker build -t <사용자명>/<레포지토리명>:[TAG] <Dockerfile 경로>
+```
+
+이미지를 Docker Hub에 업로드
+
+```bash
+docker push <사용자명>/<레포지토리명>:[TAG]
+```
+
+정리하면,
+
+- `docker login`: Docker Hub 로그인
+- `docker build -t`: 이미지 이름과 태그 지정해서 빌드
+- `docker push`: 이미지를 Docker Hub에 업로드
+
+
+## Docker Hub 이미지 다운로드
+
+Docker Hub에 올라간 이미지는 `docker pull`로 다운로드할 수 있음
+
+기본 형식
+
+```bash
+docker pull <레포지토리명>:<태그>
+```
+
+다운로드한 이미지는 컨테이너로 실행 가능
+
+```bash
+docker run -it dreamhackofficial/exercise-docker:1 /bin/bash
+```
+
+Docker Hub에서 이미지를 가져오면  
+직접 Dockerfile을 빌드하지 않아도 같은 환경을 사용할 수 있음
+
+
+## Docker 정리
+
+Docker에서 가장 중요하게 볼 흐름
+
+1. Dockerfile 작성
+2. `docker build`로 이미지 생성
+3. `docker images`로 이미지 확인
+4. `docker run`으로 컨테이너 실행
+5. 컨테이너 안에서 파일 확인
+6. 필요하면 `docker ps`, `docker exec`, `docker stop` 사용
+7. Docker Hub를 통해 이미지 공유 또는 다운로드
+
+기억할 핵심
+
+- 이미지: 컨테이너를 만들기 위한 틀
+- 컨테이너: 이미지를 실행한 환경
+- Dockerfile: 이미지를 만들기 위한 설정 파일
+- Docker Hub: 이미지를 저장하고 공유하는 저장소
