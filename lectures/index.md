@@ -4,8 +4,6 @@ title: 강의 학습
 permalink: /lectures/
 ---
 
-# 강의 학습
-
 <div class="post-list">
   <a class="card-wrapper" href="/posts/dream-beginners/">
     <div class="card post-preview flex-md-row-reverse">
