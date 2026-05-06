@@ -4,8 +4,6 @@ title: CTF
 permalink: /ctf/
 ---
 
-# CTF
-
 <div class="post-list">
   <div class="card post-preview flex-md-row-reverse">
     <div class="card-body d-flex flex-column">
