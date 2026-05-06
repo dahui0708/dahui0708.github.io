@@ -4,8 +4,6 @@ title: 프로젝트 활동
 permalink: /projects/
 ---
 
-# 프로젝트 활동
-
 <div class="post-list">
   <a class="card-wrapper" href="/projects/club/">
     <div class="card post-preview flex-md-row-reverse">
