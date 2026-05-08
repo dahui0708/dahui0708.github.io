@@ -1411,6 +1411,7 @@ docker exec -it <컨테이너명 또는 ID> /bin/bash
 
 
 
+
 ## Dockerfile
 
 Dockerfile은 Docker 이미지를 만들기 위한 설정 파일
@@ -1422,7 +1423,8 @@ Dockerfile의 기본 파일명은 확장자 없이 `Dockerfile`
 
 `docker build`를 실행하면 현재 디렉토리에서 Dockerfile을 찾아 이미지를 빌드함
 
-Dockerfile 기본 구조
+
+<Dockerfile 기본 구조>
 
 ```dockerfile
 # 주석
@@ -1436,7 +1438,7 @@ Dockerfile은 보통 `FROM` 명령어로 시작함
 
 
 
-## Dockerfile 명령어 - 1
+## Dockerfile 명령어 
 
 `FROM`은 이미지의 기반이 되는 base 이미지를 지정함
 
@@ -1445,6 +1447,7 @@ FROM ubuntu:18.04
 ```
 
 Ubuntu 18.04 이미지를 기반으로 새 이미지를 만든다는 의미
+
 
 `ENV`는 Dockerfile 안에서 사용할 환경 변수를 지정함
 
@@ -1464,10 +1467,6 @@ ${변수명}
 이후 Dockerfile 안에서 `$user`를 사용할 수 있음
 
 
-
-
-## Dockerfile 명령어 - 2
-
 `RUN`은 이미지를 빌드할 때 실행할 명령어를 작성함
 
 ```dockerfile
@@ -1477,17 +1476,20 @@ RUN ["/bin/bash", "-c", "echo hello"]
 
 패키지를 설치하거나 권한을 설정할 때 자주 사용함
 
+
 `COPY`는 로컬 파일이나 디렉토리를 이미지 파일 시스템 안으로 복사함
 
 ```dockerfile
 COPY <src> <dest>
 ```
 
+
 `ADD`도 파일이나 디렉토리를 이미지 파일 시스템 안으로 복사함
 
 ```dockerfile
 ADD <src> <dest>
 ```
+
 
 `WORKDIR`은 Dockerfile 안에서 명령어가 실행될 작업 디렉토리를 지정함
 
@@ -1497,11 +1499,13 @@ WORKDIR /home/user
 
 리눅스의 `cd` 명령어와 비슷하게 이해하면 됨
 
+
 `USER`는 이후 명령을 실행할 사용자 또는 그룹을 지정함
 
 ```dockerfile
 USER $username
 ```
+
 
 `EXPOSE`는 컨테이너가 사용할 포트를 지정함
 
@@ -1514,13 +1518,12 @@ EXPOSE 80/tcp
 
 
 
-## Dockerfile 명령어 - 3
-
 `ENTRYPOINT`는 컨테이너가 실행될 때 수행할 기본 명령어를 지정함
 
 ```dockerfile
 ENTRYPOINT ["echo", "hello"]
 ```
+
 
 `CMD`는 컨테이너가 실행될 때 수행할 명령어를 지정하거나,  
 `ENTRYPOINT`에 전달할 인자를 지정함
@@ -1548,21 +1551,8 @@ python app.py
 만약 실행할 때 인자를 바꾸면 `CMD` 부분이 바뀔 수 있음
 
 
-<예시 흐름>
 
-```bash
-docker run 이미지
-```
-
-→ `python app.py` 실행
-
-```bash
-docker run 이미지 test.py
-```
-
-→ `python test.py` 실행
-
-정리할 것
+<정리>
 
 - `ENTRYPOINT`: 컨테이너 실행 시 기본 실행 명령 지정
 - `CMD`: 기본 인자 또는 기본 명령 지정
@@ -1572,39 +1562,13 @@ docker run 이미지 test.py
 
 
 
-## Exercise Dockerfile 흐름
-
-실습 Dockerfile에서는 문제 실행 환경을 구성함
-
-확인할 수 있는 내용
-
-- Ubuntu 22.04 기반 이미지 사용
-- 환경 변수 설정
-- 필요한 패키지 설치
-- 사용자 생성
-- flag 파일 복사
-- 실행 파일 복사
-- 파일 소유자와 권한 설정
-- 작업 디렉토리 설정
-- 사용할 사용자 지정
-- 포트 노출
-- socat으로 문제 서비스 실행
-
-Dockerfile 흐름을 보면 문제 환경이 어떻게 만들어지는지 알 수 있음
-
-특히 CTF 문제에서는 flag 권한, 실행 파일 권한, 사용자 권한이 중요할 수 있음  
-따라서 Dockerfile이 제공되면 어떤 파일을 어디에 복사하고 어떤 권한을 주는지 확인하는 것이 좋음
-
-
-
-
 ## Docker Hub
 
-Docker Hub는 Docker의 공식 레지스트리
+↳ Docker의 공식 레지스트리
 
 Docker 이미지를 저장하고 공유할 수 있는 저장소
 
-Docker Hub에서 할 수 있는 것
+<Docker Hub에서 할 수 있는 것>
 
 - 공식 이미지 다운로드
 - 다른 사용자가 올린 이미지 다운로드
@@ -1616,15 +1580,12 @@ Docker Hub에서 할 수 있는 것
 프로그래밍 언어 개발 환경 이미지 등을 가져올 수 있음
 
 
-
-
-## Docker Hub 이미지 업로드
-
 Docker Hub에 이미지를 업로드하려면 먼저 로그인해야 함
 
 ```bash
 docker login
 ```
+
 
 이미지를 빌드할 때 저장소 이름과 태그를 지정함
 
@@ -1632,61 +1593,18 @@ docker login
 docker build -t <사용자명>/<레포지토리명>:[TAG] <Dockerfile 경로>
 ```
 
+
 이미지를 Docker Hub에 업로드
 
 ```bash
 docker push <사용자명>/<레포지토리명>:[TAG]
 ```
 
-정리하면,
+<정리>
 
 - `docker login`: Docker Hub 로그인
 - `docker build -t`: 이미지 이름과 태그 지정해서 빌드
 - `docker push`: 이미지를 Docker Hub에 업로드
-
-
-
-
-## Docker Hub 이미지 다운로드
-
-Docker Hub에 올라간 이미지는 `docker pull`로 다운로드할 수 있음
-
-기본 형식
-
-```bash
-docker pull <레포지토리명>:<태그>
-```
-
-다운로드한 이미지는 컨테이너로 실행 가능
-
-```bash
-docker run -it dreamhackofficial/exercise-docker:1 /bin/bash
-```
-
-Docker Hub에서 이미지를 가져오면  
-직접 Dockerfile을 빌드하지 않아도 같은 환경을 사용할 수 있음
-
-
-
-
-## Docker 정리
-
-Docker에서 가장 중요하게 볼 흐름
-
-1. Dockerfile 작성
-2. `docker build`로 이미지 생성
-3. `docker images`로 이미지 확인
-4. `docker run`으로 컨테이너 실행
-5. 컨테이너 안에서 파일 확인
-6. 필요하면 `docker ps`, `docker exec`, `docker stop` 사용
-7. Docker Hub를 통해 이미지 공유 또는 다운로드
-
-기억할 핵심
-
-- 이미지: 컨테이너를 만들기 위한 틀
-- 컨테이너: 이미지를 실행한 환경
-- Dockerfile: 이미지를 만들기 위한 설정 파일
-- Docker Hub: 이미지를 저장하고 공유하는 저장소
 
 
 
