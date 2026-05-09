@@ -34,8 +34,6 @@ description: Dreamhack Dream Beginners 강의 내용 정리
   (드림핵에서는 C언어와 Python을 먼저 익히는 것을 권장!)
 
 
-
-
 ## 컴퓨터 과학 
 
 ↳ 컴퓨터를 이용한 모든 작업과 그 기반 이론을 연구하는 학문으로,  
