@@ -1,15 +1,11 @@
 ---
 layout: post
-title: Dream Beginners
+title: Dream Beginners 내용 정리
 date: 2026-05-05 00:00:00 +0900
 categories: [Lectures, Dreamhack]
 tags: [dreamhack, linux, web]
 description: Dreamhack Dream Beginners 강의 내용 정리
 ---
-
-
-# Dreamhack Dream Beginners 내용 정리
-
 
 ## '**해킹(Hacking)**'이란?
 
