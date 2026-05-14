@@ -3,7 +3,7 @@ layout: post
 title: 로그 기반 위협 탐지 및 대응 자동화 시스템
 date: 2026-05-10 00:00:00 +0900
 categories: [Projects, Club]
-tags: [python, security, log, ir]
+tags: [python, security, log, detection, incident-response]
 description: Python 기반 로그 분석 및 위협 탐지 자동화 프로젝트
 ---
 
