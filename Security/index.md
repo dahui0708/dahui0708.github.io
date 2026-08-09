@@ -10,4 +10,4 @@ permalink: /Security/
 
 ## 컴퓨터 기초
 
-- [컴퓨터 기초 - 정보보안을 공부하기 전에 알아야 할 핵심 개념](/posts/computer-basics/)
+- [컴퓨터 기초 핵심 개념](/posts/computer-basics/)
