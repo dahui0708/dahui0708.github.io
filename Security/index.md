@@ -10,11 +10,12 @@ permalink: /Security/
 
 ## 학습 기록
 
-{% assign security_posts = site.posts | where_exp: "post", "post.categories contains '보안 학습'" %}
+{% for post in site.posts %}
+{% if post.categories contains "보안 학습" %}
 
-{% for post in security_posts %}
 ### [{{ post.title }}]({{ post.url | relative_url }})
 
-`{{ post.date | date: "%Y-%m-%d" }}`
+{{ post.date | date: "%Y-%m-%d" }}
 
+{% endif %}
 {% endfor %}
