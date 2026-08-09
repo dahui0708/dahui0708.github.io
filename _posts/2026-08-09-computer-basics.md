@@ -1,7 +1,7 @@
 ---
 title: "컴퓨터 기초 핵심 개념"
 date: 2026-08-09 16:47:00 +0900
-categories: [강의 학습, 컴퓨터 기초]
+categories: [보 학습, 컴퓨터 기초]
 tags: [computer-basics, computer-architecture, operating-system]
 ---
 
