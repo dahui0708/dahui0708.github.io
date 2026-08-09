@@ -10,4 +10,3 @@ permalink: /Security/
 
 ## 컴퓨터 기초
 
-- [컴퓨터 기초 핵심 개념](/posts/computer-basics/)
